@@ -1,0 +1,196 @@
+#############################################################
+## JOB DESCRIPTION                                         ##
+#############################################################
+
+#Pull-10DNA
+
+#############################################################
+## ADJUSTABLE PARAMETERS                                   ##
+#############################################################
+
+structure          ../../../../../weisi3/wu-clya-pore/clya-cs-13mer-run/add-ions/clya-cs_ions.psf
+coordinates        ../../../../../weisi3/wu-clya-pore/clya-cs-13mer-run/add-ions/clya-cs_ions.pdb
+outputName         min
+
+set temperature    295
+
+# Continuing a job from the restart files
+if {0} {
+set inputname      ../../../../../weisi3/wu-clya-pore/clya-cs-13mer-run/equilibration-sio-titin-f-eq/eq
+binCoordinates     $inputname.restart.coor
+binVelocities      $inputname.restart.vel  ;# remove the "temperature" entry if you use this!
+extendedSystem	   $inputname.restart.xsc
+} 
+
+firsttimestep      0
+
+
+#############################################################
+## SIMULATION PARAMETERS                                   ##
+#############################################################
+# Input
+paraTypeCharmm	    on
+parameters     ../../charmm36.nbfix/par_all36_prot.prm
+parameters     ../../charmm36.nbfix/par_water_ions_na.prm
+parameters     ../../charmm36.nbfix/par_all36_na.prm
+parameters     ../../charmm36.nbfix/par_all36_lipid.prm
+parameters     ../../charmm36.nbfix/par_all36_dphpc.str
+
+
+# NOTE: Do not set the initial velocity temperature if you 
+# have also specified a .vel restart file!
+temperature         $temperature
+ 
+
+# Periodic Boundary Conditions
+# NOTE: Do not set the periodic cell basis if you have also 
+# specified an .xsc restart file!
+if {1} { 
+cellBasisVector1     220.0    0.0   0.0
+cellBasisVector2     0.0     220.0   0.0
+cellBasisVector3     0.0    0.0  250.0
+cellOrigin           0.0   0.0   0.0
+}
+wrapWater           on
+wrapAll             on
+binaryOutput        yes
+binaryRestart       yes
+wrapNearest         no
+comMotion           yes
+
+# Force-Field Parameters
+exclude             scaled1-4
+1-4scaling          1.0
+cutoff              12.
+switching           on
+switchdist          10.
+pairlistdist        13.5
+
+
+# Integrator Parameters
+timestep            1  ;# 2fs/step
+rigidBonds          all  ;# needed for 2fs steps
+nonbondedFreq       1
+fullElectFrequency  3   ;#origin 3  
+stepspercycle       12
+
+
+#PME (for full-system periodic electrostatics)
+if {1} {
+PME                 yes
+#PMEGridSizeX       130
+#PMEGridSizeY       150
+#PMEGridSizeZ       300
+PMEGridSpacing      1
+}
+
+
+# Constant Temperature Control
+langevin            on    ;# do langevin dynamics
+#langevinDamping     1.0     ;# damping coefficient (gamma) of 5/ps
+langevinTemp        $temperature
+langevinFile       ../../../../../weisi3/wu-clya-pore/clya-cs-13mer-run/add-ions/clya-cs_langevin.pdb
+langevinCol          B
+#langevinHydrogen    off
+
+# Constant Pressure Control (variable volume)
+if {0} {
+useGroupPressure      yes ;# needed for 2fs steps
+useFlexibleCell       yes  ;# no for water box, yes for membrane
+useConstantArea       no  ;# no for water box, yes for membrane
+langevinPiston        on
+langevinPistonTarget  1.01325 ;#  in bar -> 1 atm
+langevinPistonPeriod  200.
+langevinPistonDecay   50.
+langevinPistonTemp    $temperature
+}
+
+# This section is outputing the information very frequently
+restartfreq        480   ;# 1000steps = every 2ps
+dcdfreq            480
+xstFreq            480
+outputEnergies      480
+outputPressure      480
+outputTiming        480
+
+# Fixed Atoms Constraint (set PDB beta-column to 1)
+if {0} {
+fixedAtoms          on
+fixedAtomsFile      ../../../../../weisi3/wu-clya-pore/clya-cs-13mer-run/add-ions/gra+pro_fix.pdb
+fixedAtomsCol       B
+fixedAtomsForces    on
+}
+
+#############################################################
+## EXTRA PARAMETERS                                        ##
+#############################################################
+
+# Put here any custom parameters that are specific to 
+# this job (e.g., SMD, TclForces, etc...)
+
+
+###add electric field
+if {0} {
+set voltage 2.0
+set lengthZ 70.0
+eFieldOn                       yes
+eField                         0.0 0.0 [expr 23.06054917 * $voltage / $lengthZ]     ;# 1 V/A= 23.0451 kcal/(molAe)
+#eFieldOn yes
+#eField 0 0 -0.2857
+}
+
+
+
+###apply grid force 
+if {0} {
+gridforce                       on
+gridforceFile                   ../../../../../weisi3/wu-clya-pore/clya-cs-13mer-run/combine-sio-titin-f-eq/specific.pdb
+gridforceCol                    B
+gridforceChargeCol              O
+gridforcePotFile               ../../../../../weisi3/wu-clya-pore/clya-cs-13mer-run/combine-sio-titin-f-eq/specific3.5-2.dx
+gridforceScale                  2 2 2
+gridforceCont1                  on
+gridforceCont2                  on
+gridforceCont3                  off # maybe change to on, make sure grid is exactly the same size
+gridforcechecksize              off
+}
+
+
+
+#####add constraint on sio
+if {0} {                   ;#try by weisi to constrain certain atom along a plane
+constraints on
+consexp		2
+consref	 	../../../../../weisi3/wu-clya-pore/clya-cs-13mer-run/add-ions/clya-as_restrain.pdb
+conskfile	../../../../../weisi3/wu-clya-pore/clya-cs-13mer-run/add-ions/clya-as_restrain.pdb    ;#it is suggested to be the same
+#selectConstraints on
+#selectConstrX   on
+#selectConstrY   off
+#selectConstrZ   off
+conskcol 	B
+
+}
+
+
+#####add smd here to restrain the com of protein
+if {0} {
+SMD	on
+SMDFile	../../../../../weisi3/wu-clya-pore/clya-cs-13mer-run/combine-sio-titin-f-eq/sio+titin_smd.pdb
+SMDk	10
+SMDk2   10
+SMDVel	0.0     ;#0.000002 zhiyu zhao
+SMDDir	0	0	1
+SMDOutputFreq	1000
+}
+
+#############################################################
+## EXECUTION SCRIPT                                        ##
+#############################################################
+
+# Minimization
+if {1} {
+minimize            9600
+reinitvels          $temperature
+}
+
+run 0 ; # 28.8ns

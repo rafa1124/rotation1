@@ -1,0 +1,125 @@
+## JOB DESCRIPTION                                         ##
+#############################################################
+
+#Pull-10DNA
+
+#############################################################
+## ADJUSTABLE PARAMETERS                                   ##
+#############################################################
+
+structure          ../../../../../weisi3/wu-clya-pore/clya-cs-13mer-run/add-ions/clya-cs_ions.psf
+coordinates        ../../../../../weisi3/wu-clya-pore/clya-cs-13mer-run/add-ions/clya-cs_ions.pdb
+outputName         min
+
+set temperature    295
+
+
+
+#############################################################
+## SIMULATION PARAMETERS                                   ##
+#############################################################
+# Input
+paraTypeCharmm	    on
+parameters     ../../charmm36.nbfix/par_all36_prot.prm
+parameters     ../../charmm36.nbfix/par_water_ions_na.prm
+parameters     ../../charmm36.nbfix/par_all36_na.prm
+parameters     ../../charmm36.nbfix/par_all36_lipid.prm
+parameters     ../../charmm36.nbfix/par_all36_dphpc.str
+
+
+# NOTE: Do not set the initial velocity temperature if you 
+# have also specified a .vel restart file!
+temperature         $temperature
+ 
+
+# Periodic Boundary Conditions
+# NOTE: Do not set the periodic cell basis if you have also 
+# specified an .xsc restart file!
+if {1} { 
+cellBasisVector1     220.0    0.0   0.0
+cellBasisVector2     0.0     220.0   0.0
+cellBasisVector3     0.0    0.0  250.0
+cellOrigin           0.0   0.0   0.0
+}
+wrapWater           on
+wrapAll             on
+binaryOutput        yes
+binaryRestart       yes
+wrapNearest         no
+comMotion           yes
+
+# Force-Field Parameters
+exclude             scaled1-4
+1-4scaling          1.0
+cutoff              12.
+switching           on
+switchdist          10.
+pairlistdist        13.5
+
+
+# Integrator Parameters
+timestep            1  ;# 2fs/step
+rigidBonds          all  ;# needed for 2fs steps
+nonbondedFreq       1
+fullElectFrequency  3   ;#origin 3  
+stepspercycle       12
+
+
+
+
+# Constant Temperature Control
+#langevin            off   ;# do langevin dynamics
+#langevinDamping     1.0     ;# damping coefficient (gamma) of 5/ps
+#langevinTemp        $temperature
+#langevinFile       ../../../../../weisi3/wu-clya-pore/clya-cs-13mer-run/add-ions/clya-#cs_langevin.pdb
+#langevinCol          B
+#langevinHydrogen    off
+
+
+
+# This section is outputing the information very frequently
+restartfreq        480   ;# 1000steps = every 2ps
+dcdfreq            480
+xstFreq            480
+outputEnergies      480
+outputPressure      480
+outputTiming        480
+
+# Fixed Atoms Constraint (set PDB beta-column to 1)
+
+if {0} {
+fixedAtoms          on
+fixedAtomsFile      ../../../../../weisi3/wu-clya-pore/clya-cs-13mer-run/add-ions/gra+pro_fix.pdb
+fixedAtomsCol       B
+fixedAtomsForces    on
+}
+
+#############################################################
+## EXTRA PARAMETERS                                        ##
+#############################################################
+
+# Put here any custom parameters that are specific to 
+# this job (e.g., SMD, TclForces, etc...)
+
+
+
+
+
+
+
+
+
+
+
+
+#############################################################
+## EXECUTION SCRIPT                                        ##
+#############################################################
+
+# Minimization
+if {1} {
+minimize            9600
+reinitvels          $temperature
+}
+
+run 0 ; # 28.8ns

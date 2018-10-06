@@ -1,0 +1,153 @@
+#############################################################
+## JOB DESCRIPTION                                         ##
+#############################################################
+
+# Production of Aerolysin at 0.5 V 
+# embedded in DFPC membrane, ions and water.
+# Protein constrained. PME, Constant Pressure.
+
+#############################################################
+## ADJUSTABLE PARAMETERS                                   ##
+#############################################################
+
+structure          clya-13mercs_kcl.psf
+coordinates        clya-13mercs_kcl.pdb
+outputName         eq2
+
+set temperature    293
+
+# Continuing a job from the restart files
+if {1} {
+set inputname      min_nofix
+binCoordinates     $inputname.restart.coor
+binVelocities      $inputname.restart.vel  ;# remove the "temperature" entry if you use this!
+extendedSystem	   $inputname.restart.xsc
+} 
+
+firsttimestep      0
+
+
+#############################################################
+## SIMULATION PARAMETERS                                   ##
+#############################################################
+
+# Input
+paraTypeCharmm	    on
+parameters                      ../../charmm36.nbfix/par_all36_prot.prm
+parameters                      ../../charmm36.nbfix/par_water_ions_na.prm
+parameters                      ../../charmm36.nbfix/par_all36_na.prm
+parameters                      ../../charmm36.nbfix/par_all36_lipid.prm
+parameters                      ../../charmm36.nbfix/par_all36_dphpc.str
+
+# NOTE: Do not set the initial velocity temperature if you 
+# have also specified a .vel restart file!
+#temperature         $temperature
+ 
+
+# Periodic Boundary Conditions
+# NOTE: Do not set the periodic cell basis if you have also 
+# specified an .xsc restart file!
+if {0} { 
+cellBasisVector1    180.    0.   0.
+cellBasisVector2     0.   180.   0.
+cellBasisVector3     0.    0.  185.
+cellOrigin          0      0    47.5
+}
+wrapWater           on
+wrapAll             on
+
+
+# Force-Field Parameters
+exclude             scaled1-4
+1-4scaling          1.0
+cutoff              12.
+switching           on
+switchdist          10.
+pairlistdist        13.5
+
+
+# Integrator Parameters
+timestep            2.0  ;# 2fs/step
+rigidBonds          all  ;# needed for 2fs steps
+nonbondedFreq       1
+fullElectFrequency  2  
+stepspercycle       20
+
+
+#PME (for full-system periodic electrostatics)
+if {1} {
+PME                 yes
+PMEGridSpacing  1.0
+}
+
+
+# Constant Temperature Control
+langevin            on    ;# do langevin dynamics
+langevinDamping     1     ;# damping coefficient (gamma) of 5/ps
+langevinTemp        $temperature
+
+# Constant Pressure Control (variable volume)
+if {1} {
+useGroupPressure      yes ;# needed for 2fs steps
+useFlexibleCell       yes  ;# no for water box, yes for membrane
+useConstantArea       yes  ;# no for water box, yes for membrane
+
+langevinPiston        on
+langevinPistonTarget  1.01325 ;#  in bar -> 1 atm
+langevinPistonPeriod  200.
+langevinPistonDecay   50.
+langevinPistonTemp    $temperature
+}
+
+
+restartfreq        1000     ;# 1000steps = every 2ps
+dcdfreq            1000
+xstFreq            1000
+outputEnergies      1000
+outputPressure      1000
+
+
+# Fixed Atoms Constraint (set PDB beta-column to 1)
+if {0} {
+fixedAtoms          on
+fixedAtomsFile      nottails.fix.pdb
+fixedAtomsCol       B
+fixedAtomsForces    on
+}
+
+#############################################################
+## EXTRA PARAMETERS                                        ##
+#############################################################
+
+# Put here any custom parameters that are specific to 
+# this job (e.g., SMD, TclForces, etc...)
+
+constraints on
+consexp 2
+constraintScaling 0.05
+consref clya_13mercs_kcl_CA.pdb
+conskfile clya_13mercs_kcl_CA.pdb
+conskcol B
+margin 3
+
+tclforces off
+set waterCheckFreq              100
+set lipidCheckFreq              100
+set allatompdb                  aero_dphpc_wi_1M.pdb
+tclForcesScript                 keep_water_out.tcl
+
+#eFieldOn yes
+#eField 0 0 -0.0193461171792982
+
+
+#############################################################
+## EXECUTION SCRIPT                                        ##
+#############################################################
+
+# Minimization
+if {0} {
+minimize            1000
+reinitvels          $temperature
+}
+
+run 500000 ;# 1ns

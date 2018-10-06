@@ -1,0 +1,8 @@
+package require solvate 
+solvate 2srcprotein.psf 2srcprotein.pdb -t 5 -o 2srcprotein_wb
+
+set all [atomselect top all] 
+measure minmax $all
+measure center $all
+#{-26.558000564575195 -35.71200180053711 49.41299819946289} {37.17300033569336 35.65800094604492 137.5229949951172}
+#5.221132278442383 -0.11254940927028656 93.37065887451172

@@ -1,0 +1,230 @@
+Charm++: standalone mode (not using charmrun)
+Charm++> Running in Multicore mode:  1 threads
+Charm++> Using recursive bisection (scheme 3) for topology aware partitions
+Converse/Charm++ Commit ID: v6.7.0-0-g46f867c-namd-charm-6.7.0-build-2015-Dec-21-45876
+Warning> Randomization of stack pointer is turned on in kernel, thread migration may not work! Run 'echo 0 > /proc/sys/kernel/randomize_va_space' as root to disable it, or try run with '+isomalloc_sync'.  
+CharmLB> Load balancer assumes all CPUs are same.
+Charm++> Running on 1 unique compute nodes (8-way SMP).
+Charm++> cpu topology info is gathered in 0.001 seconds.
+Info: Built with CUDA version 6000
+Did not find +devices i,j,k,... argument, using all
+Pe 0 physical rank 0 binding to CUDA device 0 on tbgl-work8.physics.illinois.edu: 'GeForce GTX 770'  Mem: 1999MB  Rev: 3.0
+Info: NAMD 2.11 for Linux-x86_64-multicore-CUDA
+Info: 
+Info: Please visit http://www.ks.uiuc.edu/Research/namd/
+Info: for updates, documentation, and support information.
+Info: 
+Info: Please cite Phillips et al., J. Comp. Chem. 26:1781-1802 (2005)
+Info: in all publications reporting results obtained with NAMD.
+Info: 
+Info: Based on Charm++/Converse 60700 for multicore-linux64-iccstatic
+Info: Built Mon Dec 21 10:47:12 CST 2015 by jim on despina.ks.uiuc.edu
+Info: 1 NAMD  2.11  Linux-x86_64-multicore-CUDA  1    tbgl-work8.physics.illinois.edu  yifei6
+Info: Running on 1 processors, 1 nodes, 1 physical nodes.
+Info: CPU topology information available.
+Info: Charm++/Converse parallel runtime startup completed at 0.016155 s
+CkLoopLib is used in SMP with a simple dynamic scheduling (converse-level notification) but not using node-level queue
+Info: 8.65625 MB of memory in use based on /proc/self/stat
+Info: Configuration file is 11heat.conf
+Info: Working in the current directory /data/server7/yifei6/Build13mernanpore/clya/13mer/mineqheat
+TCL: Suspending until startup complete.
+Info: EXTENDED SYSTEM FILE   min2.xsc
+Info: SIMULATION PARAMETERS:
+Info: TIMESTEP               1
+Info: NUMBER OF STEPS        4000
+Info: STEPS PER CYCLE        20
+Info: PERIODIC CELL BASIS 1  180 0 0
+Info: PERIODIC CELL BASIS 2  0 180 0
+Info: PERIODIC CELL BASIS 3  0 0 185
+Info: PERIODIC CELL CENTER   0.01 0 47.5
+Info: WRAPPING ALL CLUSTERS AROUND PERIODIC BOUNDARIES ON OUTPUT.
+Info: WRAPPING TO IMAGE NEAREST TO PERIODIC CELL CENTER.
+Info: LOAD BALANCER  Centralized
+Info: LOAD BALANCING STRATEGY  New Load Balancers -- DEFAULT
+Info: LDB PERIOD             4000 steps
+Info: FIRST LDB TIMESTEP     100
+Info: LAST LDB TIMESTEP     -1
+Info: LDB BACKGROUND SCALING 1
+Info: HOM BACKGROUND SCALING 1
+Info: PME BACKGROUND SCALING 1
+Info: MIN ATOMS PER PATCH    40
+Info: VELOCITY FILE          min2.vel
+Info: CENTER OF MASS MOVING INITIALLY? YES
+Info: DIELECTRIC             1
+Info: EXCLUDE                SCALED ONE-FOUR
+Info: 1-4 ELECTROSTATICS SCALED BY 1
+Info: MODIFIED 1-4 VDW PARAMETERS WILL BE USED
+Info: DCD FILENAME           heat.dcd
+Info: DCD FREQUENCY          2000
+Info: DCD FIRST STEP         2000
+Info: DCD FILE WILL CONTAIN UNIT CELL DATA
+Info: XST FILENAME           heat.xst
+Info: XST FREQUENCY          2000
+Info: NO VELOCITY DCD OUTPUT
+Info: NO FORCE DCD OUTPUT
+Info: OUTPUT FILENAME        heat
+Info: BINARY OUTPUT FILES WILL BE USED
+Info: RESTART FILENAME       heat.restart
+Info: RESTART FREQUENCY      2000
+Info: BINARY RESTART FILES WILL BE USED
+Info: SWITCHING ACTIVE
+Info: SWITCHING ON           10
+Info: SWITCHING OFF          12
+Info: PAIRLIST DISTANCE      14
+Info: PAIRLIST SHRINK RATE   0.01
+Info: PAIRLIST GROW RATE     0.01
+Info: PAIRLIST TRIGGER       0.3
+Info: PAIRLISTS PER CYCLE    2
+Info: PAIRLISTS ENABLED
+Info: MARGIN                 0
+Info: HYDROGEN GROUP CUTOFF  2.5
+Info: PATCH DIMENSION        16.5
+Info: ENERGY OUTPUT STEPS    2000
+Info: CROSSTERM ENERGY INCLUDED IN DIHEDRAL
+Info: TIMING OUTPUT STEPS    2000
+Info: HARMONIC CONSTRAINTS ACTIVE
+Info: HARMONIC CONS EXP      2
+Info: VELOCITY REASSIGNMENT FREQ  50
+Info: VELOCITY REASSIGNMENT TEMP  10
+Info: VELOCITY REASSIGNMENT INCR  10
+Info: VELOCITY REASSIGNMENT HOLD  295
+Info: PARTICLE MESH EWALD (PME) ACTIVE
+Info: PME TOLERANCE               1e-06
+Info: PME EWALD COEFFICIENT       0.257952
+Info: PME INTERPOLATION ORDER     4
+Info: PME GRID DIMENSIONS         128 128 160
+Info: PME MAXIMUM GRID SPACING    1.5
+Info: Attempting to read FFTW data from FFTW_NAMD_2.11_Linux-x86_64-multicore-CUDA.txt
+Info: Optimizing 6 FFT steps.  1... 2... 3... 4... 5... 6...   Done.
+Info: Writing FFTW data to FFTW_NAMD_2.11_Linux-x86_64-multicore-CUDA.txt
+Info: FULL ELECTROSTATIC EVALUATION FREQUENCY      4
+Info: USING VERLET I (r-RESPA) MTS SCHEME.
+Info: C1 SPLITTING OF LONG RANGE ELECTROSTATICS
+Info: PLACING ATOMS IN PATCHES BY HYDROGEN GROUPS
+Info: NONBONDED FORCES EVALUATED EVERY 2 STEPS
+Info: RANDOM NUMBER SEED     1537913217
+Info: USE HYDROGEN BONDS?    NO
+Info: COORDINATE PDB         clya-13mercs_kcl.pdb
+Info: STRUCTURE FILE         clya-13mercs_kcl.psf
+Info: PARAMETER file: CHARMM format! 
+Info: PARAMETERS             ../../charmm36.nbfix/par_all36_prot.prm
+Info: PARAMETERS             ../../charmm36.nbfix/par_water_ions_na.prm
+Info: PARAMETERS             ../../charmm36.nbfix/par_all36_na.prm
+Info: PARAMETERS             ../../charmm36.nbfix/par_all36_lipid.prm
+Info: PARAMETERS             ../../charmm36.nbfix/par_all36_dphpc.str
+Info: USING ARITHMETIC MEAN TO COMBINE L-J SIGMA PARAMETERS
+Info: BINARY COORDINATES     min2.coor
+Info: SUMMARY OF PARAMETERS:
+Info: 275 BONDS
+Info: 713 ANGLES
+Info: 1352 DIHEDRAL
+Info: 54 IMPROPER
+Info: 6 CROSSTERM
+Info: 140 VDW
+Info: 24 VDW_PAIRS
+Info: 0 NBTHOLE_PAIRS
+Info: TIME FOR READING PSF FILE: 10.0442
+Info: TIME FOR READING PDB FILE: 1.07241
+Info: 
+Info: ****************************
+Info: STRUCTURE SUMMARY:
+Info: 516853 ATOMS
+Info: 391040 BONDS
+Info: 285541 ANGLES
+Info: 231971 DIHEDRALS
+Info: 12009 IMPROPERS
+Info: 3991 CROSSTERMS
+Info: 0 EXCLUSIONS
+Info: 4017 CONSTRAINTS
+Info: 1550559 DEGREES OF FREEDOM
+Info: 189460 HYDROGEN GROUPS
+Info: 4 ATOMS IN LARGEST HYDROGEN GROUP
+Info: 189460 MIGRATION GROUPS
+Info: 4 ATOMS IN LARGEST MIGRATION GROUP
+Info: TOTAL MASS = 3.2676e+06 amu
+Info: TOTAL CHARGE = 7.55675e-05 e
+Info: MASS DENSITY = 0.905256 g/cm^3
+Info: ATOM DENSITY = 0.0862284 atoms/A^3
+Info: *****************************
+Info: Reading from binary file min2.coor
+Info: 
+Info: Entering startup at 12.6316 s, 218.012 MB of memory in use
+Info: Startup phase 0 took 0.00504899 s, 218.047 MB of memory in use
+Info: ADDED 1191809 IMPLICIT EXCLUSIONS
+Info: Startup phase 1 took 0.570792 s, 273.344 MB of memory in use
+Info: NONBONDED TABLE R-SQUARED SPACING: 0.0625
+Info: NONBONDED TABLE SIZE: 769 POINTS
+Info: INCONSISTENCY IN FAST TABLE ENERGY VS FORCE: 0.000325096 AT 11.9556
+Info: INCONSISTENCY IN SCOR TABLE ENERGY VS FORCE: 0.000324844 AT 11.9556
+Info: ABSOLUTE IMPRECISION IN VDWA TABLE ENERGY: 4.59334e-32 AT 11.9974
+Info: RELATIVE IMPRECISION IN VDWA TABLE ENERGY: 7.4108e-17 AT 11.9974
+Info: INCONSISTENCY IN VDWA TABLE ENERGY VS FORCE: 0.0040507 AT 0.251946
+Info: ABSOLUTE IMPRECISION IN VDWB TABLE ENERGY: 1.53481e-26 AT 11.9974
+Info: RELATIVE IMPRECISION IN VDWB TABLE ENERGY: 7.96691e-18 AT 11.9974
+Info: INCONSISTENCY IN VDWB TABLE ENERGY VS FORCE: 0.00150189 AT 0.251946
+Info: Updated CUDA LJ table with 140 x 140 elements.
+Info: Updated CUDA force table with 4096 elements.
+Info: Startup phase 2 took 0.0930209 s, 289.262 MB of memory in use
+Info: Startup phase 3 took 0.000149012 s, 289.266 MB of memory in use
+Info: Startup phase 4 took 0.00142503 s, 289.266 MB of memory in use
+Info: Startup phase 5 took 0.000105858 s, 289.301 MB of memory in use
+Info: PATCH GRID IS 10 (PERIODIC) BY 10 (PERIODIC) BY 11 (PERIODIC)
+Info: PATCH GRID IS 1-AWAY BY 1-AWAY BY 1-AWAY
+Info: Reading from binary file min2.vel
+Info: LARGEST PATCH (288) HAS 516853 ATOMS
+Info: TORUS A SIZE 1 USING 0
+Info: TORUS B SIZE 1 USING 0
+Info: TORUS C SIZE 1 USING 0
+Info: TORUS MINIMAL MESH SIZE IS 1 BY 1 BY 1
+Info: Placed 100% of base nodes on same physical node as patch
+Info: Startup phase 6 took 0.274285 s, 345.441 MB of memory in use
+Info: PME using 1 and 1 processors for FFT and reciprocal sum.
+Info: PME GRID LOCATIONS: 0
+Info: PME TRANS LOCATIONS: 0
+Info: PME USING 1 GRID NODES AND 1 TRANS NODES
+Info: Optimizing 4 FFT steps.  1... 2... 3... 4...   Done.
+Info: Startup phase 7 took 0.00997496 s, 355.566 MB of memory in use
+Info: Startup phase 8 took 0.000241041 s, 355.57 MB of memory in use
+LDB: Central LB being created...
+Info: Startup phase 9 took 0.000838995 s, 355.574 MB of memory in use
+Info: CREATING 24207 COMPUTE OBJECTS
+CUDA device 0 supports concurrent kernels.
+Info: Found 350 unique exclusion lists needing 1204 bytes
+Pe 0 hosts 0 local and 1100 remote patches for pe 0
+Info: Startup phase 10 took 0.26182 s, 390.461 MB of memory in use
+Info: Startup phase 11 took 0.000243902 s, 390.555 MB of memory in use
+Info: Startup phase 12 took 0.00836301 s, 395.965 MB of memory in use
+Info: Finished startup at 13.8579 s, 396.129 MB of memory in use
+
+REASSIGNING VELOCITIES AT STEP 0 TO 10 KELIN.
+Pe 0 has 0 local and 1100 remote patches and 0 local and 15400 remote computes.
+FATAL ERROR: CUDA error cudaMalloc(pp, sizeofT*(*curlen)) in file src/CudaUtils.C, function reallocate_device_T
+ on Pe 0 (tbgl-work8.physics.illinois.edu device 0): out of memory
+[0] Stack Traceback:
+  [0:0] CmiAbort+0x41  [0xefde44]
+  [0:1] _Z8NAMD_diePKc+0x93  [0x64a6c3]
+  [0:2] _Z19reallocate_device_TPPvPiifm+0x18f  [0x95ccdf]
+  [0:3] _Z17reallocate_deviceI8exclmaskEbPPT_Piif+0xe  [0xd1cb9e]
+  [0:4] _Z21cuda_bind_patch_pairsP10patch_pairiiiii+0x163  [0xd16e43]
+  [0:5] _ZN20ComputeNonbondedCUDA6doWorkEv+0xa17  [0x81f917]
+  [0:6] _Z15_processHandlerPvP11CkCoreState+0x727  [0xd95e07]
+  [0:7] CsdScheduler+0x5ff  [0xf0722f]
+  [0:8] _ZN9ScriptTcl3runEv+0x459  [0xc406d9]
+  [0:9] main+0x3fb  [0x64feeb]
+  [0:10] __libc_start_main+0xf5  [0x7f77948cd445]
+  [0:11] _ZNSt8ios_base4InitD1Ev+0x52  [0x5a7e4a]
+[0] Stack Traceback:
+  [0:0] LrtsAbort+0x70  [0xefe524]
+  [0:1] CmiAbortHelper+0x102  [0xefddfd]
+  [0:2] CmiAbort+0x41  [0xefde44]
+  [0:3] _Z8NAMD_diePKc+0x93  [0x64a6c3]
+  [0:4] _Z19reallocate_device_TPPvPiifm+0x18f  [0x95ccdf]
+  [0:5] _Z17reallocate_deviceI8exclmaskEbPPT_Piif+0xe  [0xd1cb9e]
+  [0:6] _Z21cuda_bind_patch_pairsP10patch_pairiiiii+0x163  [0xd16e43]
+  [0:7] _ZN20ComputeNonbondedCUDA6doWorkEv+0xa17  [0x81f917]
+  [0:8] _Z15_processHandlerPvP11CkCoreState+0x727  [0xd95e07]
+  [0:9] CsdScheduler+0x5ff  [0xf0722f]
+  [0:10] _ZN9ScriptTcl3runEv+0x459  [0xc406d9]
+  [0:11] main+0x3fb  [0x64feeb]
+  [0:12] __libc_start_main+0xf5  [0x7f77948cd445]
+  [0:13] _ZNSt8ios_base4InitD1Ev+0x52  [0x5a7e4a]
